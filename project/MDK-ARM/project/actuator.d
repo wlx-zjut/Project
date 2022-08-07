@@ -32,3 +32,7 @@ project\actuator.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 project\actuator.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 project\actuator.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 project\actuator.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+project\actuator.o: ../Core/Inc/usart.h
+project\actuator.o: ../Core/Inc/delay.h
+project\actuator.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+project\actuator.o: D:\keil5\ARM\ARMCC\Bin\..\include\math.h

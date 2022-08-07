@@ -1,7 +1,6 @@
 project\motor.o: ..\Core\Src\motor.c
 project\motor.o: ../Core/Inc/motor.h
 project\motor.o: ../Core/Inc/motor.h
-project\motor.o: ../Core/Inc/gpio.h
 project\motor.o: ../Core/Inc/main.h
 project\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 project\motor.o: ../Core/Inc/stm32f4xx_hal_conf.h
@@ -34,4 +33,5 @@ project\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 project\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 project\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 project\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+project\motor.o: ../Core/Inc/gpio.h
 project\motor.o: ../Core/Inc/tim.h

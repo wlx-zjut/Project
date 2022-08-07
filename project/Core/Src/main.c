@@ -97,18 +97,27 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM4_Init();
   MX_TIM5_Init();
-  MX_TIM11_Init();
   MX_UART4_Init();
   MX_UART5_Init();
   MX_USART2_UART_Init();
+  MX_TIM9_Init();
   /* USER CODE BEGIN 2 */
 	delay_init(180);
 	HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_1);//开启定时器的pwm
 	HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_2);//开启定时器的pwm
 	HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_3);//开启定时器的pwm
 	HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_4);//开启定时器的pwm
-	HAL_TIM_PWM_Start(&htim11,TIM_CHANNEL_1);//开启定时器的pwm	
+	HAL_TIM_PWM_Start(&htim9,TIM_CHANNEL_1);//开启定时器的pwm	
+	HAL_TIM_PWM_Start(&htim9,TIM_CHANNEL_2);//开启定时器的pwm	
 	HAL_TIM_PWM_Start(&htim10,TIM_CHANNEL_1);//开启定时器的pwm
+	
+	HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+	HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
+	
+	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
+	HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
+
+
 
   /* USER CODE END 2 */
 
@@ -116,8 +125,25 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		steering_to_180();
 
+	
+	
+		PID_actuator(250);
+		printf("1");
+		actuator_down_end();
+		printf("2");
+		while(1);
+//		
+//		PID_actuator(-50-20*i);
+//			i++;
+//		while(1){
+
+//		printf("height  %d  %d   \n",TIM3->CNT,TIM1->CNT);	
+//			
+//		}
+
+//		leftactuator_down(8999);
+//		rightactuator_down(8999);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -170,7 +196,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV4;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
   {

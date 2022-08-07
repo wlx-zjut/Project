@@ -1,6 +1,7 @@
 #ifndef __MOTOR_H_
 #define __MOTOR_H_
 #include "motor.h"
+#include "main.h"
 void motor_left1_go(int speed);
 void motor_left1_back(int speed);
 void motor_left1_stop(void);
@@ -26,8 +27,8 @@ void Car_go_right(int speed);
 void Car_go_spinright(int speed);
 void Car_go_spinleft(int speed);
 
-
-
+int read_motor_left(void);
+int read_motor_right(void);
 #endif
 
 

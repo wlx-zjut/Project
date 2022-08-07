@@ -68,13 +68,13 @@ void motor_right2_stop(){
 	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_3,GPIO_PIN_RESET);
 }
 
-void Car_go(int speed){
+void Car_back(int speed){
 			motor_left1_go(speed);
 		  motor_left2_go(speed);
 			motor_right1_go(speed);
 			motor_right2_go(speed);
 }
-void Car_back(int speed){
+void Car_go	(int speed){
 			motor_left1_back(speed);
 		  motor_left2_back(speed);
 			motor_right1_back(speed);
@@ -107,6 +107,7 @@ void Car_go_spinright(int speed){
 			motor_right1_back(speed);
 			motor_right2_back(speed);	
 }
+
 void Car_go_spinleft(int speed){
 			motor_left1_back(speed);
 		  motor_left2_back(speed);
@@ -114,5 +115,11 @@ void Car_go_spinleft(int speed){
 			motor_right2_go(speed);	
 }
 
+int read_motor_left(){
+			return -TIM2->CNT;
+}
 
+int read_motor_right(){
+			return TIM5->CNT;
+}
 

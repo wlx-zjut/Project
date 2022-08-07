@@ -262,5 +262,20 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
+#if 1
+#include <stdio.h>
+
+int fputc(int ch, FILE *stream)
+{
+    /* 堵塞判断串口是否发送完成 */
+    while((USART2->SR & 0X40) == 0);
+
+    /* 串口发送完成，将该字符发送 */
+    USART2->DR = (uint8_t) ch;
+
+    return ch;
+}
+#endif
+//在usart.c文件中添加此代码即可
 
 /* USER CODE END 1 */
