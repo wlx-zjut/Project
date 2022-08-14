@@ -29,6 +29,8 @@ void Car_go_spinleft(int speed);
 
 int read_motor_left(void);
 int read_motor_right(void);
+
+void turn_180(void);
 #endif
 
 

@@ -1,80 +1,75 @@
 #include "motor.h"
 #include "gpio.h"
 #include "tim.h"
+#include "delay.h"
+#include "usart.h"
+void motor_left1_go(int speed){
+	TIM8->CCR2=speed;	
+	TIM8->CCR1=0;
+}
 void motor_left1_back(int speed){
 	TIM8->CCR1=speed;	
-	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_RESET);	
-	HAL_GPIO_WritePin(GPIOI,GPIO_PIN_7,GPIO_PIN_SET);
-}
-void motor_left1_go(int speed){
-	TIM8->CCR1=speed;	
-	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_SET);	
-	HAL_GPIO_WritePin(GPIOI,GPIO_PIN_7,GPIO_PIN_RESET);		
+	TIM8->CCR2=0;
 }
 void motor_left1_stop(){	
-	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_4,GPIO_PIN_RESET);	
-	HAL_GPIO_WritePin(GPIOI,GPIO_PIN_7,GPIO_PIN_RESET);
+	TIM8->CCR1=8999;	
+	TIM8->CCR2=8999;
+}
+
+
+
+void motor_right1_back(int speed){
+	TIM12->CCR2=speed;	
+	TIM12->CCR1=0;
+
+}
+void motor_right1_go(int speed){
+	TIM12->CCR1=speed;	
+	TIM12->CCR2=0;
+}
+void motor_right1_stop(){	
+	TIM12->CCR1=8999;	
+	TIM12->CCR2=8999;
 }
 
 
 
 void motor_left2_back(int speed){
 	TIM8->CCR3=speed;	
-	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);	
-	HAL_GPIO_WritePin(GPIOI,GPIO_PIN_11,GPIO_PIN_SET);
+	TIM8->CCR4=0;	
 
 }
 void motor_left2_go(int speed){
-	TIM8->CCR3=speed;	
-	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_SET);	
-	HAL_GPIO_WritePin(GPIOI,GPIO_PIN_11,GPIO_PIN_RESET);		
+	TIM8->CCR4=speed;	
+	TIM8->CCR3=0;	
 }
 void motor_left2_stop(){	
-	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,GPIO_PIN_RESET);	
-	HAL_GPIO_WritePin(GPIOI,GPIO_PIN_11,GPIO_PIN_RESET);
+	TIM8->CCR4=8999;	
+	TIM8->CCR3=8999;	
 }
 
 
-
-void motor_right1_back(int speed){
-	TIM8->CCR2=speed;	
-	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_14,GPIO_PIN_RESET);	
-	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_12,GPIO_PIN_SET);
-
-}
-void motor_right1_go(int speed){
-	TIM8->CCR2=speed;	
-	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_14,GPIO_PIN_SET);	
-	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_12,GPIO_PIN_RESET);		
-}
-void motor_right1_stop(){	
-	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_14,GPIO_PIN_RESET);	
-	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_12,GPIO_PIN_RESET);
-}
-
-void motor_right2_back(int speed){
-	TIM8->CCR4=speed;	
-	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_2,GPIO_PIN_RESET);	
-	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_3,GPIO_PIN_SET);
-
-}
 void motor_right2_go(int speed){
-	TIM8->CCR4=speed;	
-	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_2,GPIO_PIN_SET);	
-	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_3,GPIO_PIN_RESET);		
+	TIM13->CCR1=speed;	
+	TIM14->CCR1=0;	
+
+}
+void motor_right2_back(int speed){
+	TIM13->CCR1=0;	
+	TIM14->CCR1=speed;	
 }
 void motor_right2_stop(){	
-	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_2,GPIO_PIN_RESET);	
-	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_3,GPIO_PIN_RESET);
+	TIM13->CCR1=8999;	
+	TIM14->CCR1=8999;	
 }
 
-void Car_back(int speed){
+void Car_go(int speed){
 			motor_left1_go(speed);
 		  motor_left2_go(speed);
 			motor_right1_go(speed);
 			motor_right2_go(speed);
 }
-void Car_go	(int speed){
+void Car_back(int speed){
 			motor_left1_back(speed);
 		  motor_left2_back(speed);
 			motor_right1_back(speed);
@@ -88,16 +83,19 @@ void Car_stop(){
 }
 
 void Car_go_left(int speed){
-			motor_left1_back(speed);
-		  motor_left2_go(speed);
-			motor_right1_go(speed);
-			motor_right2_back(speed);
+			motor_left2_go(speed);
+			motor_left1_back(speed-100);
+
+			motor_right1_go(speed-100);
+			motor_right2_back(speed-100);
 }
 
 
 void Car_go_right(int speed){
+			motor_left2_back(speed);
+			delay_ms(10);
 			motor_left1_go(speed);
-		  motor_left2_back(speed);
+
 			motor_right1_back(speed);
 			motor_right2_go(speed);
 }
@@ -122,4 +120,19 @@ int read_motor_left(){
 int read_motor_right(){
 			return TIM5->CNT;
 }
-
+void turn_180(){
+	TIM2->CNT=30000;
+	TIM5->CNT=30000;	
+	Car_go_spinright(8000);
+	while(1){
+		delay_ms(20);
+		if((TIM2->CNT+TIM5->CNT)<55340){
+			Car_stop();
+			return ;
+			
+		}
+		
+	}
+	
+	
+}

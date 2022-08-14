@@ -39,3 +39,6 @@ project\main.o: ../Core/Inc/motor.h
 project\main.o: ../Core/Inc/motor.h
 project\main.o: ../Core/Inc/steering.h
 project\main.o: ../Core/Inc/actuator.h
+project\main.o: ../Core/Inc/uart_get.h
+project\main.o: ../Core/Inc/linetrack.h
+project\main.o: ../Core/Inc/linetrack_lr.h

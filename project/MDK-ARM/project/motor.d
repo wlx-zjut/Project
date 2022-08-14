@@ -35,3 +35,5 @@ project\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 project\motor.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 project\motor.o: ../Core/Inc/gpio.h
 project\motor.o: ../Core/Inc/tim.h
+project\motor.o: ../Core/Inc/delay.h
+project\motor.o: ../Core/Inc/usart.h

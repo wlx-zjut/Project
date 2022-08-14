@@ -4,33 +4,33 @@
 #include <stdlib.h>
 #include <math.h>
 
-void rightactuator_down(int speed){
+void leftactuator_down(int speed){
 	TIM9->CCR1=speed;
 	HAL_GPIO_WritePin(GPIOI,GPIO_PIN_4,GPIO_PIN_RESET);	
 	HAL_GPIO_WritePin(GPIOD,GPIO_PIN_6,GPIO_PIN_SET);
 }
-void rightactuator_up(int speed){
+void leftactuator_up(int speed){
 	TIM9->CCR1=speed;
 	HAL_GPIO_WritePin(GPIOI,GPIO_PIN_4,GPIO_PIN_SET);	
 	HAL_GPIO_WritePin(GPIOD,GPIO_PIN_6,GPIO_PIN_RESET);
 }
-void rightactuator_stop(){
+void leftactuator_stop(){
 	HAL_GPIO_WritePin(GPIOI,GPIO_PIN_4,GPIO_PIN_RESET);	
 	HAL_GPIO_WritePin(GPIOD,GPIO_PIN_6,GPIO_PIN_RESET);
 }
 
 
-void leftactuator_down(int speed){
+void rightactuator_up(int speed){
 	TIM9->CCR2=speed;
 	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_13,GPIO_PIN_RESET);	
 	HAL_GPIO_WritePin(GPIOG,GPIO_PIN_10,GPIO_PIN_SET);
 }
-void leftactuator_up(int speed){
+void rightactuator_down(int speed){
 	TIM9->CCR2=speed;
 	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_13,GPIO_PIN_SET);	
 	HAL_GPIO_WritePin(GPIOG,GPIO_PIN_10,GPIO_PIN_RESET);
 }
-void leftactuator_stop(){
+void rightactuator_stop(){
 	HAL_GPIO_WritePin(GPIOH,GPIO_PIN_13,GPIO_PIN_RESET);	
 	HAL_GPIO_WritePin(GPIOG,GPIO_PIN_10,GPIO_PIN_RESET);
 }
@@ -85,7 +85,7 @@ void PID_once_actuator(int goal_height,int left_actual_height,int right_actual_h
 		if(abs(goal_height-left_actual_height)<=25 &&  abs(goal_height-right_actual_height)<=25) break_flag=1;
 //		if(left_PWM<=6500&&right_PWM<=2000 &&   left_PWM>0&&right_PWM>0) break_flag=1;
 //		if(left_PWM>=-6500&&right_PWM>=-2000 && left_PWM<0&&right_PWM<0) break_flag=1;
-		printf("%d   %d  %d\n",abs(goal_height-left_actual_height),abs(goal_height-right_actual_height),break_flag);
+		//printf("%d   %d  %d\n",abs(goal_height-left_actual_height),abs(goal_height-right_actual_height),break_flag);
 	  int Set_height;
 		Set_height=(left_actual_height+right_actual_height)/2;
 	
@@ -118,7 +118,7 @@ void PID_actuator(int goal_height)//目标高度
 			left_actual_height=TIM1->CNT-30000;
 			right_actual_height=TIM3->CNT-30000;	
 			PID_once_actuator(goal_height,left_actual_height,right_actual_height,left_actual_height,right_actual_height);
-			//printf("height  %d  %d   \n",TIM3->CNT,TIM1->CNT);	
+			printf("height  %d  %d   \n",TIM3->CNT,TIM1->CNT);	
 
 			if(break_flag==1){
 				leftactuator_stop();
@@ -133,10 +133,11 @@ void PID_actuator(int goal_height)//目标高度
 void actuator_down_end()//降到底
 {
 	  int tim1_last=0,tim3_last=0;
+	TIM1->CNT=200; TIM3->CNT=300;
 		while(1){
 		leftactuator_down(8999);
 		rightactuator_down(8999);
-		delay_ms(50);			
+		delay_ms(100);			
 			if(tim1_last==TIM1->CNT &&  tim3_last==TIM3->CNT)
 			{
 				leftactuator_stop();

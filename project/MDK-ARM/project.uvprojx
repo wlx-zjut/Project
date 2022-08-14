@@ -410,6 +410,21 @@
               <FilePath>..\Core\Src\actuator.c</FilePath>
             </File>
             <File>
+              <FileName>uart_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\uart_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>linetrack.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\linetrack.c</FilePath>
+            </File>
+            <File>
+              <FileName>linetrack_lr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\linetrack_lr.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>

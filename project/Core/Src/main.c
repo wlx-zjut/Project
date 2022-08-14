@@ -29,6 +29,9 @@
 #include "steering.h"
 #include "actuator.h"
 #include "steering.h"
+#include "uart_get.h"
+#include "linetrack.h"
+#include "linetrack_lr.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -101,14 +104,28 @@ int main(void)
   MX_UART5_Init();
   MX_USART2_UART_Init();
   MX_TIM9_Init();
+  MX_TIM12_Init();
+  MX_TIM13_Init();
+  MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
 	delay_init(180);
 	HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_1);//开启定时器的pwm
 	HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_2);//开启定时器的pwm
 	HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_3);//开启定时器的pwm
 	HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_4);//开启定时器的pwm
-	HAL_TIM_PWM_Start(&htim9,TIM_CHANNEL_1);//开启定时器的pwm	
+	
+	HAL_TIM_PWM_Start(&htim12,TIM_CHANNEL_1);//开启定时器的pwm	
+	HAL_TIM_PWM_Start(&htim12,TIM_CHANNEL_2);//开启定时器的pwm
+
+	HAL_TIM_PWM_Start(&htim13,TIM_CHANNEL_1);//开启定时器的pwm	
+	HAL_TIM_PWM_Start(&htim14,TIM_CHANNEL_1);//开启定时器的pwm		
+	
+	
+	HAL_TIM_PWM_Start(&htim9,TIM_CHANNEL_1);//开启定时器的pwm		
 	HAL_TIM_PWM_Start(&htim9,TIM_CHANNEL_2);//开启定时器的pwm	
+	
+	
+	
 	HAL_TIM_PWM_Start(&htim10,TIM_CHANNEL_1);//开启定时器的pwm
 	
 	HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
@@ -117,31 +134,27 @@ int main(void)
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
 	HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
 
-
-
+	HAL_UART_Receive_IT(&huart4, (uint8_t*)recv_buf,1);
+	delay_ms(8000);
   /* USER CODE END 2 */
+//track_around();
+delay_ms(1000);
+//app_LineWalking_go_right();
+//delay_ms(1000);
+//track_around1();
+//while (1);
+
+//		leftactuator_up(8999);
+//		rightactuator_up(8999);
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+app_LineWalking_go_left();
 
-	
-	
-		PID_actuator(250);
-		printf("1");
-		actuator_down_end();
-		printf("2");
-		while(1);
-//		
-//		PID_actuator(-50-20*i);
-//			i++;
-//		while(1){
-
-//		printf("height  %d  %d   \n",TIM3->CNT,TIM1->CNT);	
-//			
-//		}
-
+		
+		
 //		leftactuator_down(8999);
 //		rightactuator_down(8999);
     /* USER CODE END WHILE */
