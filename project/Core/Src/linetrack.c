@@ -9,7 +9,7 @@ int Track_error_d[2];//记录速度偏差
 int Sonser_Error;//角度偏差
 int g_Duty;
 int Left_Duty,Right_Duty;
-int Base_Duty = 8500;
+int Base_Duty = 8000;
 
 int Track_PID_Place(int Set_Duty,int Actual_Duty)
 {
@@ -155,6 +155,9 @@ void app_LineWalking_back(void)
 
 
 void LineWalking_go_cross_stop(void){
+	Car_back(8000);
+	delay_ms(1000);
+	
 	while(1){
 			app_LineWalking_go();
 			if(cross_flag){

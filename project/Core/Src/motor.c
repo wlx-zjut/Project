@@ -90,6 +90,19 @@ void Car_go_left(int speed){
 			motor_right2_back(speed-100);
 }
 
+void Car_go_left_acc(int road){
+		TIM2->CNT=30000;
+		while(1){
+			Car_go_left(8000);
+			delay_ms(10);
+			if(TIM2->CNT>30000+road){
+					Car_stop();
+					return ;
+			}
+		}
+}
+
+
 
 void Car_go_right(int speed){
 			motor_left2_back(speed);
@@ -113,6 +126,15 @@ void Car_go_spinleft(int speed){
 			motor_right2_go(speed);	
 }
 
+void Car_go_right45(int speed){
+			motor_left1_go(speed+1500);
+		  motor_left2_back(speed);
+			motor_right1_back(speed);
+			motor_right2_go(speed+1500);	
+}
+
+
+
 int read_motor_left(){
 			return -TIM2->CNT;
 }
@@ -121,18 +143,16 @@ int read_motor_right(){
 			return TIM5->CNT;
 }
 void turn_180(){
+	Car_stop();
+	delay_ms(100);
 	TIM2->CNT=30000;
 	TIM5->CNT=30000;	
 	Car_go_spinright(8000);
 	while(1){
 		delay_ms(20);
-		if((TIM2->CNT+TIM5->CNT)<55340){
+		if((TIM2->CNT+TIM5->CNT)<55100){//Ô­À´ÊÇ55340
 			Car_stop();
-			return ;
-			
-		}
-		
+			return ;	
+		}	
 	}
-	
-	
 }

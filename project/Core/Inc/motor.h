@@ -26,11 +26,15 @@ void Car_go_left(int speed);
 void Car_go_right(int speed);
 void Car_go_spinright(int speed);
 void Car_go_spinleft(int speed);
+void Car_go_right45(int speed);
 
 int read_motor_left(void);
 int read_motor_right(void);
 
 void turn_180(void);
+
+
+void Car_go_left_acc(int road);
 #endif
 
 

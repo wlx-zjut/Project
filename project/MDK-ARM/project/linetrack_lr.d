@@ -36,3 +36,4 @@ project\linetrack_lr.o: ../Core/Inc/uart_get.h
 project\linetrack_lr.o: ../Core/Inc/motor.h
 project\linetrack_lr.o: ../Core/Inc/motor.h
 project\linetrack_lr.o: ../Core/Inc/usart.h
+project\linetrack_lr.o: ../Core/Inc/delay.h

@@ -32,6 +32,7 @@
 #include "uart_get.h"
 #include "linetrack.h"
 #include "linetrack_lr.h"
+#include "action.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -135,24 +136,36 @@ int main(void)
 	HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
 
 	HAL_UART_Receive_IT(&huart4, (uint8_t*)recv_buf,1);
-	delay_ms(8000);
+//	delay_ms(8000);
   /* USER CODE END 2 */
 //track_around();
 delay_ms(1000);
 //app_LineWalking_go_right();
-//delay_ms(1000);
+delay_ms(8000);
 //track_around1();
 //while (1);
-
+//turn_180();
 //		leftactuator_up(8999);
 //		rightactuator_up(8999);
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+//right_left_cy=120;	
+//go_left_to_cross_start();
+//Car_stop();
+
+//LineWalking_go_cross_stop();
+//Car_go_right45(7000);
+//delay_ms(1000);
+//right_left_cy=120;	
+//go_right_to_cross_start();
+//LineWalking_go_cross_stop();
+//turn_180();
+get_milk_in();
   while (1)
   {
-app_LineWalking_go_left();
-
+//		HAL_UART_Transmit(&huart4, (uint8_t*)"z", 1, 0xFFFF);
+	
 		
 		
 //		leftactuator_down(8999);

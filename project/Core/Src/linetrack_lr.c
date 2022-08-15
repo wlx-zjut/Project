@@ -2,13 +2,14 @@
 #include "uart_get.h"
 #include "motor.h"
 #include "usart.h"
-#define Kp (-7)
-#define Kd 0
+#include "delay.h"
+int Kp_lr=20;
+#define Kd 5
 int LR_Track_error_d[2];//¼ÇÂ¼ËÙ¶ÈÆ«²î
 int LR_Sonser_Error;//½Ç¶ÈÆ«²î
 int LR_g_Duty;
 int LR_Left_Duty,LR_Right_Duty;
-int LR_Base_Duty = 8500;
+int LR_Base_Duty = 8000;
 
 
 int LR_Track_PID_Place(int Set_Duty,int Actual_Duty)
@@ -16,17 +17,17 @@ int LR_Track_PID_Place(int Set_Duty,int Actual_Duty)
 	int error;
 	int Duty;
 	error = Actual_Duty - Set_Duty;
-	Duty = Kp * error + Kd * (error - LR_Track_error_d[1]);
+	Duty = Kp_lr * error + Kd * (error - LR_Track_error_d[1]);
 	LR_Track_error_d[1] = LR_Track_error_d[0];
 	LR_Track_error_d[0] = error;
 	return Duty;
 }
 
-
+int right_left_cy;
 void app_LineWalking_go_right(void)
 {	
-		
-		LR_Sonser_Error = (int)(90-left_line_mid);
+		Kp_lr=-25;
+		LR_Sonser_Error = (int)(right_left_cy-left_line_mid);
 		LR_g_Duty = LR_Track_PID_Place(0,LR_Sonser_Error);
 		if(LR_g_Duty > 0) //³µÁ¾ÓÒÆ«
 		{
@@ -94,10 +95,12 @@ void app_LineWalking_go_right(void)
 		}
 }
 
-void app_LineWalking_go_left(void)
+
+
+void app_LineWalking_go_left_start(void)
 {	
-		
-		LR_Sonser_Error = (int)(90-left_line_mid);
+		Kp_lr=-25;
+		LR_Sonser_Error = (int)(right_left_cy-right_line_mid);
 		LR_g_Duty = LR_Track_PID_Place(0,LR_Sonser_Error);
 		if(LR_g_Duty > 0) //³µÁ¾ÓÒÆ«
 		{
@@ -166,9 +169,32 @@ void app_LineWalking_go_left(void)
 }
 
 
-void track_around1(void){
+void go_left_to_cross_start(void){
 	while(1){
-	app_LineWalking_go_right();
+		Car_go_left_acc(950);
+		if(!cross_flag) break;					
+	}
+	
+	while(1){
+			app_LineWalking_go_left_start();
+			if(cross_flag){
+			Car_stop();
+			return ;
+			}
+	}
+		return ;
+}
+
+void go_right_to_cross_start(void){
+
+	while(1){
+		Car_go_right(8000);
+		delay_ms(1000);
+		if(!cross_flag) break;					
+	}
+	
+	while(1){
+			app_LineWalking_go_right();
 			if(cross_flag){
 			Car_stop();
 			return ;

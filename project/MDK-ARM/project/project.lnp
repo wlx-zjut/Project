@@ -13,6 +13,7 @@
 "project\usart.o"
 "project\stm32f4xx_it.o"
 "project\stm32f4xx_hal_msp.o"
+"project\action.o"
 "project\stm32f4xx_hal_tim.o"
 "project\stm32f4xx_hal_tim_ex.o"
 "project\stm32f4xx_hal_rcc.o"

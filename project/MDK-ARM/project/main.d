@@ -42,3 +42,4 @@ project\main.o: ../Core/Inc/actuator.h
 project\main.o: ../Core/Inc/uart_get.h
 project\main.o: ../Core/Inc/linetrack.h
 project\main.o: ../Core/Inc/linetrack_lr.h
+project\main.o: ../Core/Inc/action.h
